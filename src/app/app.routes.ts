@@ -14,7 +14,8 @@ const APP_ROUTES: Routes = [
     {path: 'people/:id', component: PeopleComponent},
     {path: 'login', component: LoginComponent},
     {path: 'addPeople', component: AddPeopleComponent},
-    {path: '', pathMatch: 'full', redirectTo: 'login'}
+    {path: '', pathMatch: 'full', redirectTo: 'login'},
+    {path: '', loadChildren:'./modulos/modulos.module#ModulosModule'}
 ]
 
-export const app_routing = RouterModule.forRoot(APP_ROUTES, {useHash: true})
+export const app_routing = RouterModule.forRoot(APP_ROUTES, {useHash: false})

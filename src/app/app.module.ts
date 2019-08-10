@@ -2,8 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+
 // routes
 import { app_routing } from './app.routes';
+import { RouterModule } from '@angular/router';
 
 // services
 import { PeoplesService } from './services/peoples.service';
@@ -20,6 +22,7 @@ import { AddPeopleComponent } from './components/add-people/add-people.component
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
+import { HomeService } from './services/home.service';
 
 @NgModule({
   declarations: [
@@ -34,6 +37,7 @@ import { environment } from '../environments/environment';
     AddPeopleComponent
   ],
   imports: [
+    RouterModule,
     BrowserModule,
     app_routing,
     FormsModule,
@@ -42,6 +46,7 @@ import { environment } from '../environments/environment';
   ],
   providers: [
     PeoplesService,
+    HomeService,
     {
       provide: 'CanAlwaysActivateGuard',
       useValue: () => {

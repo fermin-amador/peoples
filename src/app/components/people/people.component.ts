@@ -1,5 +1,6 @@
+import { People } from './../../models/people';
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "../../../../node_modules/@angular/router";
+import { ActivatedRoute, Router } from "../../../../node_modules/@angular/router";
 import { PeoplesService } from "../../services/peoples.service";
 import { HomeService } from '../../services/home.service';
 
@@ -9,21 +10,37 @@ import { HomeService } from '../../services/home.service';
   styleUrls: ["./people.component.css"]
 })
 export class PeopleComponent implements OnInit {
-  public people: any;
+  public peopleDetails: any;
 
   constructor(
-    private activateRoute: ActivatedRoute,
+    private router: Router,
+    private route: ActivatedRoute,
     private peoplesService: PeoplesService,
     private homeService: HomeService
-  ) {}
+  ) {
+
+
+
+  }
 
   ngOnInit() {
-    // this.activateRoute.params.subscribe(({ id }) => {
-    //   this.peoplesService.getPeopleById(id).subscribe(data => {
-    //     console.log(data)
-    //     this.people = data;
-    //   });
-    // });
+    this.peopleDetails ='';
+
+    const id = this.route.snapshot.paramMap.get('id');
+    if(id.length != 20){
+      this.router.navigate(['/peoples']);
+    }else{
+
+      this.peoplesService.getPeopleById(id).subscribe(
+        (data) => {
+          if(data)this.peopleDetails = data;
+          else this.router.navigate(['/peoples']);
+        },
+        (error) => console.log("error",error)
+
+      );
+    }
     this.homeService.setActiveNav(true);
+
   }
 }

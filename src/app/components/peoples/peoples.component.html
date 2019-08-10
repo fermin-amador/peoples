@@ -1,15 +1,68 @@
 <div>
     <h1>Actores de Marvel</h1>
     <input class="form-control mr-sm-2 searchInput" style="border-radius: 10px" [(ngModel)]="searchText" placeholder="Buscar">
+    <br>
+    <button class="btn btn-primary moverbutton" (click)="clearInputs(); ModeModal=0" data-toggle="modal" data-target="#myModal">Crear Actor</button>
 </div>
-<hr>
+<hr style="display:block">
 <div class="card-columns">
     <div class="card animated fadeIn fast" *ngFor="let people of peoples | search : searchText; let i = index">
         <div class="card-body">
             <h5 class="card-title">{{people.name}}</h5>
             <p class="card-text">{{people.biography}}</p>
             <p class="card-text"><small class="text-muted">{{people.heroe}}</small></p>
-            <a [routerLink]="['/people', people.code]" class="btn btn-primary">Ver más..</a>
+            <!-- <a [routerLink]="['/people', people.id]" class="btn btn-primary">Ver más..</a> -->
+            <!-- <a  class="btn btn-primary nglin">Ver</a> -->
+            <a class="btn btn-primary" [routerLink]="[ '/people', people.id ]">ver</a>
+            <button class="btn btn-success" (click)="openModal(people.id); ModeModal=1" data-toggle="modal" data-target="#myModal">Actualizar</button>
+            <a  class="btn btn-danger" (click)="deletePeople(people.id)">Eliminar</a>
         </div>
     </div>
+</div>
+
+
+
+
+
+
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title" *ngIf="ModeModal==0">Crear Actor</h4>
+        <h4 class="modal-title" *ngIf="ModeModal==1">Actualizar Actor</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+
+
+        <form>
+          <label for="name" class="col-sm-2">Nombre:</label>
+          <input [(ngModel)]="peopler.name" type="text" name="name" class="form-control" placeholder="Nombre" required>
+          <label for="biography" class="col-sm-2">Biografia:</label>
+          <input [(ngModel)]="peopler.biography" type="text" name="biography"  class="form-control" placeholder="Biografia" required>
+          <label for="heroe" class="col-sm-2">Heroe:</label>
+          <input [(ngModel)]="peopler.heroe" type="text" name="heroe"  class="form-control" placeholder="Heroe" required>
+        </form>
+
+
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+        <button *ngIf="ModeModal==0" type="button" class="btn btn-primary" data-dismiss="modal" (click)="addPeople(peopler)" >Guardar</button>
+        <button *ngIf="ModeModal==1" type="button" class="btn btn-primary" data-dismiss="modal" (click)="updatePeople(peopler);" >Actualizar</button>
+
+        <!-- this button is hidden, used to close from typescript -->
+        <button type="button" id="close-modal" data-dismiss="modal" style="display: none">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
